@@ -15,8 +15,8 @@ export function LessonTitle() {
   return (
     <div style={{ maxWidth: 1500 }}>
       <In><div className="eyebrow">{tx({ uz: 'Dars boshlandi', ru: 'Урок начинается' })}</div></In>
-      <In d={0.08}><h2 className="h-xl" style={{ marginTop: 28 }}>{tx({ uz: 'So\'z emas,', ru: 'Учим не слова,' })} <span className="under">{tx({ uz: 'qolip', ru: 'а шаблоны' })}</span> {tx({ uz: 'yodlaymiz', ru: '' })}</h2></In>
-      <In d={0.16}><p className="lead" style={{ fontSize: 44 }}>3 {tx({ uz: 'qolip', ru: 'шаблона' })} × 8 {tx({ uz: 'fe\'l', ru: 'глаголов' })} = <b className="o">{SENTENCES} {tx({ uz: 'ta tayyor gap', ru: 'готовые фразы' })}</b></p></In>
+      <In d={0.08}><h2 className="h-xl" style={{ marginTop: 28 }}>{tx({ uz: 'So\'z emas,', ru: 'Учим не слова,' })} <span className="under">{tx({ uz: 'shablon', ru: 'а шаблоны' })}</span> {tx({ uz: 'yodlaymiz', ru: '' })}</h2></In>
+      <In d={0.16}><p className="lead" style={{ fontSize: 44 }}>3 {tx({ uz: 'shablon', ru: 'шаблона' })} × 8 {tx({ uz: 'fe\'l', ru: 'глаголов' })} = <b className="o">{SENTENCES} {tx({ uz: 'ta tayyor gap', ru: 'готовые фразы' })}</b></p></In>
       <In d={0.24}><div style={{ marginTop: 40 }}><SayIt>{tx({ uz: 'Daftar kerak emas. Ovozingiz kerak.', ru: 'Тетрадь не нужна. Нужен ваш голос.' })}</SayIt></div></In>
     </div>
   );
@@ -27,7 +27,7 @@ export function Secret() {
   const forms = ['я работаю', 'ты работаешь', 'он работает', 'мы работаем', 'вы работаете', 'они работают'];
   return (
     <div>
-      <Head eyebrow={tx({ uz: 'Sir', ru: 'Секрет' })} title={<>{tx({ uz: 'Qolipda fe\'l', ru: 'В шаблоне глагол' })} <span className="b">{tx({ uz: 'o\'zgarmaydi', ru: 'не меняется' })}</span></>} />
+      <Head eyebrow={tx({ uz: 'Sir', ru: 'Секрет' })} title={<>{tx({ uz: 'Shablonda fe\'l', ru: 'В шаблоне глагол' })} <span className="b">{tx({ uz: 'o\'zgarmaydi', ru: 'не меняется' })}</span></>} />
       <div className="two-col" style={{ alignItems: 'stretch' }}>
         <Step n={1}>
           <div className="card" style={{ height: '100%' }}>
@@ -40,7 +40,7 @@ export function Secret() {
         </Step>
         <Step n={2}>
           <div className="card card-blue" style={{ height: '100%' }}>
-            <div className="small" style={{ color: 'var(--yellow)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 10 }}><Check size={26} /> {tx({ uz: 'QOLIPDA: BITTA SHAKL', ru: 'В ШАБЛОНЕ: ОДНА ФОРМА' })}</div>
+            <div className="small" style={{ color: 'var(--yellow)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 10 }}><Check size={26} /> {tx({ uz: 'SHABLONDA: BITTA SHAKL', ru: 'В ШАБЛОНЕ: ОДНА ФОРМА' })}</div>
             <div style={{ marginTop: 26, display: 'grid', gap: 14 }}>
               {patterns.map(p => <div key={p.id} style={{ fontSize: 52, fontWeight: 800, letterSpacing: '-.02em' }}><span style={{ color: 'var(--yellow)' }}>{p.ru}</span> работать{p.q ? '?' : ''}</div>)}
             </div>
@@ -58,7 +58,7 @@ export const patternSlide = (idx: number, ex: number[]) => function PatternSlide
   const p = patterns[idx];
   return (
     <div>
-      <In><div className="eyebrow">{idx + 1}-{tx({ uz: 'qolip', ru: 'й шаблон' })}</div></In>
+      <In><div className="eyebrow">{idx + 1}-{tx({ uz: 'shablon', ru: 'й шаблон' })}</div></In>
       <div className="two-col" style={{ gridTemplateColumns: '.92fr 1.08fr', marginTop: 28, alignItems: 'stretch', gap: 44 }}>
         <In d={0.06}>
           <div className={'card ' + (idx === 1 ? 'card-cream' : 'card-blue')} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '44px 48px' }}>
@@ -119,7 +119,7 @@ export function Builder() {
     <div>
       <Head eyebrow={tx({ uz: 'Konstruktor', ru: 'Конструктор' })} title={<>3 × 8 = <span className="b">{SENTENCES} {tx({ uz: 'ta gap', ru: 'фразы' })}</span></>} />
       <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: 34, alignItems: 'start' }} className="two-col">
-        <div style={{ display: 'grid', gap: 14 }}>
+        <div className="pats" style={{ display: 'grid', gap: 14 }}>
           {patterns.map((q, k) => <button key={q.id} className={'pick o' + (k === pi ? ' on' : '')} aria-pressed={k === pi} onClick={() => setPi(k)}>{q.ru}</button>)}
         </div>
         <div>
@@ -213,7 +213,7 @@ export function Dialog() {
 export function Result() {
   const tx = useTx();
   const st = [
-    { n: '3', l: { uz: 'qolip', ru: 'шаблона' } },
+    { n: '3', l: { uz: 'shablon', ru: 'шаблона' } },
     { n: '8', l: { uz: 'fe\'l', ru: 'глаголов' } },
     { n: String(SENTENCES_NEG), l: { uz: 'tayyor gap', ru: 'готовых фраз' } },
     { n: '1', l: { uz: 'jonli dialog', ru: 'живой диалог' } },

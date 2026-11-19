@@ -1,8 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@fontsource-variable/manrope/index.css'
-import '@fontsource/dm-mono/400.css'
-import '@fontsource/dm-mono/500.css'
+import '@fontsource-variable/inter/index.css'
 import './index.css'
 import App from './App.tsx'
 

@@ -15,7 +15,7 @@ export function Title() {
         <span className="b">{tx({ uz: 'lekin gapira olmaysizmi?', ru: 'но не можете говорить?' })}</span>
       </h1></In>
       <In d={0.18}><p className="lead" style={{ fontSize: 42, maxWidth: 1250 }}>
-        {tx({ uz: 'Shu darsning o\'zida 3 ta qolip bilan', ru: 'Прямо на этом уроке по 3 шаблонам вы составите' })} <b className="o">{SENTENCES_NEG} {tx({ uz: 'ta gap', ru: 'фраз' })}</b> {tx({ uz: 'tuzasiz va ovoz chiqarib aytasiz.', ru: 'и произнесёте их вслух.' })}
+        {tx({ uz: 'Shu darsning o\'zida 3 ta shablon bilan', ru: 'Прямо на этом уроке по 3 шаблонам вы составите' })} <b className="o">{SENTENCES_NEG} {tx({ uz: 'ta gap', ru: 'фраз' })}</b> {tx({ uz: 'tuzasiz va ovoz chiqarib aytasiz.', ru: 'и произнесёте их вслух.' })}
       </p></In>
     </div>
   );
@@ -25,7 +25,7 @@ export function Promise() {
   const tx = useTx();
   const rows = [
     { t: { uz: 'Nega o\'zingiz o\'rgana olmayapsiz', ru: 'Почему не получается учить самому' }, d: { uz: '4 ta sabab. Bittasi sizniki bo\'lishi aniq.', ru: '4 причины. Одна из них точно ваша.' } },
-    { t: { uz: `3 ta qolip → ${SENTENCES_NEG} ta gap`, ru: `3 шаблона → ${SENTENCES_NEG} фраз` }, d: { uz: 'Yodlamaysiz. Shu yerning o\'zida gapirasiz.', ru: 'Не зубрите. Говорите прямо здесь.' } },
+    { t: { uz: `3 ta shablon → ${SENTENCES_NEG} ta gap`, ru: `3 шаблона → ${SENTENCES_NEG} фраз` }, d: { uz: 'Yodlamaysiz. Shu yerning o\'zida gapirasiz.', ru: 'Не зубрите. Говорите прямо здесь.' } },
     { t: { uz: `${DAYS} kunda razgovorga chiqish rejasi`, ru: `План: как выйти на разговор за ${DAYS} дней` }, d: { uz: 'Hafta qanday o\'tadi va kim nazorat qiladi.', ru: 'Как проходит неделя и кто вас ведёт.' } },
   ];
   return (

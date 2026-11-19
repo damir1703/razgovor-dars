@@ -44,7 +44,7 @@ export function TwoPaths() {
 export function Method() {
   const tx = useTx();
   const rows: { p: L; s: L; d: L }[] = [
-    { p: { uz: 'So\'z yodlaysiz, gap chiqmaydi', ru: 'Учите слова, фраза не выходит' }, s: { uz: `${VIDEO} ta video dars + lug'atlar`, ru: `${VIDEO} видеоуроков + словари` }, d: { uz: 'Tayyor qoliplar, audio va matnli lug\'at', ru: 'Готовые шаблоны, аудио- и текстовый словарь' } },
+    { p: { uz: 'So\'z yodlaysiz, gap chiqmaydi', ru: 'Учите слова, фраза не выходит' }, s: { uz: `${VIDEO} ta video dars + lug'atlar`, ru: `${VIDEO} видеоуроков + словари` }, d: { uz: 'Tayyor shablonlar, audio va matnli lug\'at', ru: 'Готовые шаблоны, аудио- и текстовый словарь' } },
     { p: { uz: 'Tinglaysiz, lekin gapirmaysiz', ru: 'Слушаете, но не говорите' }, s: { uz: `${LIVE} ta jonli razgovor darsi`, ru: `${LIVE} живых разговорных уроков` }, d: { uz: 'Darsda ustoz emas, siz gapirasiz', ru: 'На уроке говорит не преподаватель, а вы' } },
     { p: { uz: 'Xatoni hech kim tuzatmaydi', ru: 'Ошибки никто не исправляет' }, s: { uz: 'Individual dars: 15, 30 yoki 60 daqiqa', ru: 'Индивидуальный урок: 15, 30 или 60 минут' }, d: { uz: 'Ustoz aynan sizning talaffuzingiz bilan ishlaydi', ru: 'Преподаватель работает именно с вашим произношением' } },
     { p: { uz: 'Nazorat yo\'q, tashlab qo\'yasiz', ru: 'Нет контроля, бросаете' }, s: { uz: 'O\'qituvchi + nazoratchi ustoz', ru: 'Преподаватель + куратор' }, d: { uz: `Har kuni ${HOURS} aloqada`, ru: `На связи каждый день ${HOURS}` } },
@@ -55,9 +55,9 @@ export function Method() {
       <div style={{ display: 'grid', gap: 16 }}>
         {rows.map((r, k) => (
           <Step n={k + 1} key={k}>
-            <div style={{ display: 'grid', gridTemplateColumns: '.8fr 70px 1.2fr', alignItems: 'center' }} className="two-col">
+            <div style={{ display: 'grid', gridTemplateColumns: '.8fr 70px 1.2fr', alignItems: 'center' }} className="two-col pair">
               <div className="card" style={{ padding: '22px 30px', fontSize: 30, fontWeight: 700, color: 'var(--ink3)', textDecoration: 'line-through', textDecorationColor: 'var(--bad)' }}>{tx(r.p)}</div>
-              <ArrowRight size={44} color="var(--orange)" style={{ justifySelf: 'center' }} />
+              <ArrowRight className="arrow" size={44} color="var(--orange)" style={{ justifySelf: 'center' }} />
               <div className="card card-blue" style={{ padding: '18px 30px' }}>
                 <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-.02em' }}>{tx(r.s)}</div>
                 <div style={{ fontSize: 26, fontWeight: 600, opacity: .85 }}>{tx(r.d)}</div>
@@ -85,7 +85,7 @@ export function Week() {
   return (
     <div>
       <Head eyebrow={tx({ uz: 'Bir haftangiz', ru: 'Ваша неделя' })} title={<>{tx({ uz: 'Haftada', ru: 'В неделю' })} <span className="b">{tx({ uz: '5 kun jonli dars', ru: '5 дней живых уроков' })}</span> + {tx({ uz: 'musiqali dars', ru: 'музыкальный урок' })}</>} />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 14 }}>
+      <div className="week" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 14 }}>
         {days.map((d, k) => {
           const kind = kinds[d.k];
           return (
@@ -142,7 +142,7 @@ export function Stack() {
   return (
     <div>
       <Head eyebrow={tx({ uz: 'Kurs tarkibi', ru: 'Состав курса' })} title={<>{tx({ uz: 'Har bir tarifda', ru: 'В каждом тарифе' })} <span className="b">{tx({ uz: 'nima bor', ru: 'что есть' })}</span></>} />
-      <div className="two-col" style={{ gap: '14px 28px' }}>
+      <div className="two-col stack" style={{ gap: '14px 28px' }}>
         {stack.map((s, k) => (
           <Step n={Math.floor(k / 2) + 1} key={k}>
             <div className="card" style={{ padding: '16px 26px', display: 'flex', alignItems: 'center', gap: 20, borderRadius: 26 }}>
@@ -185,7 +185,7 @@ export function Tariffs() {
           <In d={0.05}><h2 className="h-lg" style={{ marginTop: 10, fontSize: 54 }}>{tx({ uz: 'Farqi: ustoz bilan individual vaqt', ru: 'Разница: время один на один с преподавателем' })}</h2></In>
         </div>
       </div>
-      <div className="cols3" style={{ display: 'grid', gridTemplateColumns: '1fr 1.08fr 1fr', gap: 26, alignItems: 'stretch' }}>
+      <div className="cols3 tariffs" style={{ display: 'grid', gridTemplateColumns: '1fr 1.08fr 1fr', gap: 26, alignItems: 'stretch' }}>
         {tariffs.map((t, k) => (
           <Step n={k + 1} key={t.name}>
             <div className={'card ' + cls[t.tone]} style={{ height: '100%', padding: '24px 32px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -195,7 +195,7 @@ export function Tariffs() {
                 <div style={{ fontSize: 22, fontWeight: 700, opacity: .75 }}>{tx({ uz: 'Ustoz bilan individual', ru: 'Индивидуально с преподавателем' })}</div>
                 <div style={{ fontSize: 50, fontWeight: 800, letterSpacing: '-.02em', color: t.tone === 'blue' ? 'var(--yellow)' : 'var(--blue-d)' }}>{tx(t.indiv)}</div>
               </div>
-              <div style={{ display: 'grid', gap: 8, marginTop: 16, flex: 1, alignContent: 'start', minHeight: 250 }}>
+              <div style={{ display: 'grid', gap: 8, marginTop: 16, flex: 1, alignContent: 'start', minHeight: 250 }} className="ticks">
                 <div className="tick" style={{ fontSize: 26 }}>{tx({ uz: `${LIVE} jonli + ${VIDEO} video + ${KARAOKE} musiqali dars`, ru: `${LIVE} живых + ${VIDEO} видео + ${KARAOKE} музыкальных уроков` })}</div>
                 {t.extra.map((e, j) => <div className="tick" key={j} style={{ fontSize: 26, color: 'var(--ink)', fontWeight: 800 }}>{tx(e)}</div>)}
                 <div className="tick" style={{ fontSize: 26 }}>{tx(t.guarantee)}</div>
@@ -264,7 +264,7 @@ export function Proof() {
   return (
     <div>
       <Head eyebrow={tx({ uz: 'Natijalar', ru: 'Результаты' })} title={tx({ uz: 'O\'quvchilarimiz qanday gapiryapti', ru: 'Как говорят наши ученики' })} />
-      <div className="cols3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+      <div className="cols3 proof" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
         {[1, 2, 3].map(n => (
           <div key={n} style={{ height: 430, borderRadius: 36, border: '3px dashed #C7D4F5', background: 'rgba(70,129,255,.06)', display: 'grid', placeItems: 'center', color: 'var(--blue)' }}>
             <div style={{ textAlign: 'center' }}><Play size={72} /><div style={{ fontSize: 26, fontWeight: 700, marginTop: 10 }}>{tx({ uz: `O'quvchi videosi ${n}`, ru: `Видео ученика ${n}` })}</div></div>
@@ -312,7 +312,7 @@ export function Final() {
       <div>
         <In><div className="eyebrow">{DAYS} {tx({ uz: 'kundan keyin', ru: 'дней спустя' })}</div></In>
         <In d={0.08}><h2 className="h-xl" style={{ marginTop: 26 }}>«Я <span className="under">говорю</span><br />по-русски»</h2></In>
-        <In d={0.16}><p className="lead" style={{ fontSize: 40 }}>{tx({ uz: 'Bugun siz 3 ta qolipni bilasiz. 90 kundan keyin suhbatni o\'zingiz boshlaysiz.', ru: 'Сегодня вы знаете 3 шаблона. Через 90 дней вы сами начнёте разговор.' })}</p></In>
+        <In d={0.16}><p className="lead" style={{ fontSize: 40 }}>{tx({ uz: 'Bugun siz 3 ta shablonni bilasiz. 90 kundan keyin suhbatni o\'zingiz boshlaysiz.', ru: 'Сегодня вы знаете 3 шаблона. Через 90 дней вы сами начнёте разговор.' })}</p></In>
       </div>
       <div style={{ display: 'grid', gap: 20 }}>
         <Step n={1}><div className="card"><div className="small" style={{ fontWeight: 800, letterSpacing: '.1em' }}>{tx({ uz: 'BUGUN', ru: 'СЕГОДНЯ' })}</div><div className="h-md" style={{ marginTop: 4 }}>{SENTENCES_NEG} {tx({ uz: 'ta gap va bitta dialog', ru: 'фраз и один диалог' })}</div></div></Step>

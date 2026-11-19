@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Maximize2, Video, StickyNote, Layers, Columns2, User } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2, Video, StickyNote, Layers, Columns2, User, FileText } from 'lucide-react';
+import { ScriptView } from './ScriptView';
 import { SettingsProvider, useSettings, useTx, StepCtx } from './lib/ctx';
 import { SLIDES, PARTS } from './slides';
 
@@ -49,6 +50,7 @@ function Deck() {
   const [dir, setDir] = useState(1);
   const [rec, setRec] = useState(params.get('rec') === '1');     // режим записи: без кнопок и подсказок
   const [notes, setNotes] = useState(params.get('notes') === '1');
+  const [text, setText] = useState(params.get('text') === '1');   // полная текстовая версия (сценарий)
   const { lang, setLang } = useSettings();
   const tx = useTx();
   const reduce = useReducedMotion();
@@ -78,6 +80,8 @@ function Deck() {
   useEffect(() => { history.replaceState(null, '', location.search + '#' + (i + 1)); }, [i]);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (text) return;   // открыт сценарий: слайды не листаем
+      if (e.key === 't' || e.key === 'T') { setText(true); return; }
       if ((e.target as HTMLElement)?.tagName === 'BUTTON' && (e.key === ' ' || e.key === 'Enter')) return;
       if (['ArrowRight', 'PageDown', ' ', 'ArrowDown'].includes(e.key)) { e.preventDefault(); fwd(); }
       if (['ArrowLeft', 'PageUp', 'ArrowUp'].includes(e.key)) { e.preventDefault(); back(); }
@@ -93,7 +97,7 @@ function Deck() {
     const onHash = () => go(readHash());
     addEventListener('keydown', onKey); addEventListener('hashchange', onHash);
     return () => { removeEventListener('keydown', onKey); removeEventListener('hashchange', onHash); };
-  }, [i, go, fwd, back, lang, setLang]);
+  }, [i, go, fwd, back, lang, setLang, text]);
 
   const S = SLIDES[i];
   const blue = S.tone === 'blue';
@@ -134,7 +138,7 @@ function Deck() {
 
         {/* шапка: логотип + раздел урока. Остаётся и в записи. */}
         <div style={{ position: 'absolute', left: split ? W - PANEL_W + 16 : 60, top: 40, display: 'flex', alignItems: 'center', gap: 18 }}>
-          <span style={{ background: '#fff', borderRadius: 999, padding: '11px 22px', display: 'flex', boxShadow: '0 8px 24px rgba(15,27,61,.1)' }}><img src="./logo-h.png" alt="razgovor.uz" style={{ height: 30, display: 'block' }} /></span>
+          <img src="./logo-h.png" alt="razgovor.uz" style={{ height: 38, display: 'block', filter: blue ? 'brightness(0) invert(1)' : 'none', transition: 'filter .4s' }} />
           {!rec && <span style={{ fontWeight: 800, fontSize: 19, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--ink3)' }}>{tx(part.title)} · {part.time}</span>}
         </div>
       </div>
@@ -146,7 +150,8 @@ function Deck() {
             {(['uz', 'ru'] as const).map(l => <button key={l} className={'btn' + (lang === l ? ' on' : '')} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
             <button className={'btn' + (split ? ' on' : '')} title={tx({ uz: 'Ekran: to\'liq yoki 60/40 (P)', ru: 'Экран: весь или 60/40 (P)' })} onClick={() => setSplit(v => !v)}><Columns2 size={14} /> {split ? '60/40' : tx({ uz: 'To\'liq', ru: 'Весь экран' })}</button>
             <button className={'btn' + (stepsOn ? ' on' : '')} title={tx({ uz: 'Bosqichma-bosqich chiqish (S)', ru: 'Пошаговое появление (S)' })} onClick={() => { setStepsOn(v => !v); setStep(0); }}><Layers size={14} /> {stepsOn ? tx({ uz: 'Bosqich: yoq', ru: 'Шаги: вкл' }) : tx({ uz: 'Bosqich: o\'ch', ru: 'Шаги: выкл' })}</button>
-            <button className={'btn' + (notes ? ' on' : '')} title={tx({ uz: 'Spiker matni (N)', ru: 'Текст спикера (N)' })} onClick={() => setNotes(v => !v)}><StickyNote size={14} /> {tx({ uz: 'Matn', ru: 'Текст' })}</button>
+            <button className="btn" style={{ background: '#FF811A', borderColor: '#FF811A' }} title={tx({ uz: 'To\'liq matn (T)', ru: 'Полный текст (T)' })} onClick={() => setText(true)}><FileText size={14} /> {tx({ uz: 'Ssenariy', ru: 'Сценарий' })}</button>
+            <button className={'btn' + (notes ? ' on' : '')} title={tx({ uz: 'Spiker uchun eslatma (N)', ru: 'Заметки спикеру (N)' })} onClick={() => setNotes(v => !v)}><StickyNote size={14} /> {tx({ uz: 'Eslatma', ru: 'Заметки' })}</button>
             <button className="btn" title={tx({ uz: 'Yozish rejimi (H)', ru: 'Режим записи (H)' })} onClick={() => setRec(true)}><Video size={14} /></button>
             <button className="btn" title="F" onClick={() => document.documentElement.requestFullscreen?.()}><Maximize2 size={14} /></button>
           </div>
@@ -162,6 +167,7 @@ function Deck() {
           )}
         </>
       )}
+      {text && <ScriptView onClose={() => setText(false)} onJump={k => { setText(false); go(k); }} />}
     </div>
   );
 }
