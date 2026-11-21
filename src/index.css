@@ -106,4 +106,12 @@ h1, h2, h3, p { margin: 0; }
 .script-doc h3 { font-size: 15px; font-weight: 700; color: #FF811A; text-transform: uppercase; letter-spacing: .04em; display: flex; gap: 10px; align-items: baseline; }
 .script-doc article p { margin-top: 6px; text-wrap: pretty; }
 .script-doc .script-note { font-size: 14px; color: #6B7280; padding-left: 12px; border-left: 3px solid #E7E2D6; margin-top: 10px; }
-@media print { .script { position: static; overflow: visible; } .script-bar { display: none; } html, body, #root { height: auto; overflow: visible !important; background: #fff; } .script-doc article { break-inside: avoid; } }
+@media print {
+  body:has(> .script) #root { display: none !important; }
+  html, body { height: auto !important; overflow: visible !important; background: #fff !important; }
+  .script { position: static; overflow: visible; background: #fff; }
+  .script-bar { display: none; }
+  .script-doc { max-width: none; padding: 0; }
+  .script-doc article { break-inside: avoid; }
+  .script-doc h2 { break-after: avoid; }
+}

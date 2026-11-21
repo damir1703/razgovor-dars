@@ -1,5 +1,6 @@
 // Полная текстовая версия урока: сценарий спикера по слайдам. Открывается кнопкой или ?text=1.
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Copy, Check, Printer } from 'lucide-react';
 import { useSettings, useTx } from './lib/ctx';
 import { SLIDES, PARTS } from './slides';
@@ -30,7 +31,8 @@ export function ScriptView({ onClose, onJump }: { onClose: () => void; onJump: (
     try { await navigator.clipboard.writeText(plain()); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* буфер недоступен */ }
   };
 
-  return (
+  // рендерим прямо в body: при печати слайды скрываются, остаётся только документ
+  return createPortal(
     <div className="script" role="dialog" aria-modal="true" aria-label={tx({ uz: 'Ssenariy', ru: 'Сценарий' })}>
       <div className="script-bar">
         <img src="./logo-h.png" alt="razgovor.uz" style={{ height: 22 }} />
@@ -59,6 +61,7 @@ export function ScriptView({ onClose, onJump }: { onClose: () => void; onJump: (
           </section>
         ))}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
