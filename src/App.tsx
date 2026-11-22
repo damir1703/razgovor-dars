@@ -138,7 +138,11 @@ function Deck() {
 
         {/* шапка: логотип + раздел урока. Остаётся и в записи. */}
         <div style={{ position: 'absolute', left: split ? W - PANEL_W + 16 : 60, top: 40, display: 'flex', alignItems: 'center', gap: 18 }}>
-          <img src="./logo-h.png" alt="razgovor.uz" style={{ height: 38, display: 'block', filter: blue ? 'brightness(0) invert(1)' : 'none', transition: 'filter .4s' }} />
+          {/* два файла логотипа: тёмная надпись для светлых слайдов, белая — для синих; значок цветной в обоих */}
+          <span style={{ position: 'relative', display: 'block', height: 38 }}>
+            <img src="./logo-h.png" alt="razgovor.uz" style={{ height: 38, display: 'block', opacity: blue ? 0 : 1, transition: 'opacity .4s' }} />
+            <img src="./logo-h-white.png" alt="" aria-hidden style={{ height: 38, position: 'absolute', left: 0, top: 0, opacity: blue ? 1 : 0, transition: 'opacity .4s' }} />
+          </span>
           {!rec && <span style={{ fontWeight: 800, fontSize: 19, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--ink3)' }}>{tx(part.title)} · {part.time}</span>}
         </div>
       </div>
